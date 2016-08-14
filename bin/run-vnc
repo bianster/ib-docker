@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mkdir -p /opt/vnc
+x11vnc -storepasswd "$VNC_PASSWORD" /opt/vnc/passwd > /dev/null
+
+exec /usr/bin/x11vnc -nevershared -forever -rfbport 5900 -rfbauth /opt/vnc/passwd -display $DISPLAY
