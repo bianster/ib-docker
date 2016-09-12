@@ -13,7 +13,7 @@ RUN add-apt-repository -y ppa:webupd8team/java \
     && apt-get install -y oracle-java8-installer ca-certificates
 
 # installs to /root irregardless of WORKDIR settings
-COPY tws-952-stable-standalone-linux-x64.sh tws-stable-standalone-linux-x64.sh
+COPY tws/952/tws-stable-standalone-linux-x64.sh tws-stable-standalone-linux-x64.sh
 RUN ./tws-stable-standalone-linux-x64.sh -q
 
 RUN mkdir -p /opt/IBController && wget https://github.com/ib-controller/ib-controller/releases/download/3.2.0/IBController-3.2.0.zip && unzip IBController-3.2.0.zip -d /opt/IBController && chmod -R +x /opt/IBController/*.sh && chmod -R +x /opt/IBController/Scripts/*.sh && rm IBController-3.2.0.zip
@@ -24,14 +24,13 @@ COPY bin/run-ibc /usr/bin/run-ibc
 COPY bin/run-vnc /usr/bin/run-vnc
 COPY bin/run-xvfb /usr/bin/run-xvfb
 
-COPY conf/supervisord.conf supervisord.conf
-RUN mkdir -p /var/log/ib
-COPY conf/IBController.ini /root/IBController/IBController.ini
+RUN mkdir -p /var/log/ib && mkdir -p /root/conf && mkdir -p /root/IBController
+COPY conf/default/supervisord.conf /root/conf/supervisord.conf
+COPY conf/default/IBController.ini /root/conf/IBController.ini
+
+ENV DISPLAY=":0" VNC_PASSWORD="1234" TWS_CONF_DIR=""
 
 EXPOSE 5900 4001
-VOLUME /opt /var/log/ib
+VOLUME /root/conf /var/log/ib /root/IBController/Logs
 
-ENV VNC_PASSWORD 1234
-ENV DISPLAY :0
-
-CMD ["/usr/bin/supervisord", "-n", "-c", "supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/root/conf/supervisord.conf"]

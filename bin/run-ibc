@@ -1,4 +1,12 @@
 #!/bin/sh
 
 cd /opt/IBController
+cp -a /root/conf/IBController.ini /root/IBController/IBController.ini
+
+if [ -n ${TWS_CONF_DIR} ]; then
+  if [ -f /root/conf/tws.xml ]; then
+    mkdir -p /root/Jts/${TWS_CONF_DIR} && cp -a /root/conf/tws.xml /root/Jts/${TWS_CONF_DIR}/tws.xml
+  fi
+fi
+
 exec ./IBControllerStart.sh
