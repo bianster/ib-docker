@@ -1,11 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
 cd /opt/IBController
 cp -a /root/conf/IBController.ini /root/IBController/IBController.ini
 
-if [ -n ${TWS_CONF_DIR} ]; then
-  if [ -f /root/conf/tws.xml ]; then
-    mkdir -p /root/Jts/${TWS_CONF_DIR} && cp -a /root/conf/tws.xml /root/Jts/${TWS_CONF_DIR}/tws.xml
+if [ -n $TWS_CONF_DIR ]; then
+  if [ $TWS_SYNC_CONF == "yes" ]; then
+    echo "TWS_SYNC_CONF is enabled."
+    if [ -d /root/Jts/$TWS_CONF_DIR ]; then
+      echo "Copying /root/Jts/$TWS_CONF_DIR to /tmp/tws/"
+      cp -a /root/Jts/$TWS_CONF_DIR /tmp/tws/
+    fi
+  else
+    if [ -f /root/conf/tws.xml ]; then
+      mkdir -p /root/Jts/$TWS_CONF_DIR && cp -a /root/conf/tws.xml /root/Jts/$TWS_CONF_DIR/tws.xml
+    fi
   fi
 fi
 
