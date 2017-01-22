@@ -13,7 +13,7 @@
 #=============================================================================+
 
 
-TWS_MAJOR_VRSN=952
+TWS_MAJOR_VRSN=$TWS_MAJOR_VERSION
 IBC_INI=~/IBController/IBController.ini
 TRADING_MODE=
 IBC_PATH=/opt/IBController
