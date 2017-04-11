@@ -3,7 +3,7 @@ MAINTAINER Douglas Tan <bianster@gmail.com>
 
 # install xvfb and other X dependencies for IB
 RUN apt-get update -y \
-    && apt-get install -y xvfb libxrender1 libxtst6 x11vnc socat unzip software-properties-common unzip supervisor \
+    && apt-get install -y xvfb libxrender1 libxtst6 x11vnc socat unzip software-properties-common unzip supervisor inotify-tools \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -23,6 +23,7 @@ COPY bin/IBControllerStart.sh /opt/IBController/IBControllerStart.sh
 COPY bin/run-ibc /usr/bin/run-ibc
 COPY bin/run-vnc /usr/bin/run-vnc
 COPY bin/run-xvfb /usr/bin/run-xvfb
+COPY bin/run-logger /usr/bin/run-logger
 
 RUN mkdir -p /var/log/ib && mkdir -p /root/conf && mkdir -p /root/IBController && mkdir -p /tmp/tws
 COPY conf/supervisord.conf /root/conf/supervisord.conf

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LOG_FILE=/root/Jts/$TWS_CONF_DIR/tws.log
+
+while ! test -f $LOG_FILE; do
+  echo "waiting for $LOG_FILE"
+  inotifywait --event create /root/Jts/$TWS_CONF_DIR >/dev/null
+done
+
+exec tail -f $LOG_FILE
