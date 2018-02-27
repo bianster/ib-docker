@@ -20,6 +20,7 @@ RUN mkdir -p /opt/IBController && wget https://github.com/ib-controller/ib-contr
 
 COPY bin/IBControllerStart.sh /opt/IBController/IBControllerStart.sh
 
+COPY bin/update-ibcontroller-config.py /usr/bin/update-ibcontroller-config.py
 COPY bin/run-ibc /usr/bin/run-ibc
 COPY bin/run-vnc /usr/bin/run-vnc
 COPY bin/run-xvfb /usr/bin/run-xvfb
@@ -27,11 +28,10 @@ COPY bin/run-logger /usr/bin/run-logger
 
 RUN mkdir -p /var/log/ib && mkdir -p /root/conf && mkdir -p /root/IBController && mkdir -p /tmp/tws
 COPY conf/supervisord.conf /root/conf/supervisord.conf
-COPY conf/IBController.ini /root/conf/IBController.ini
 
-ENV DISPLAY=":0" VNC_PASSWORD="1234" TWS_MAJOR_VERSION="962" TWS_CONF_DIR="" TWS_SYNC_CONF=""
+ENV DISPLAY=":0" VNC_PASSWORD="1234" TWS_MAJOR_VERSION="962" TWS_CONF_DIR="" TWS_SYNC_CONF="" IB_LOGIN="edemo" IB_PASSWORD="demouser" IB_MODE="paper"
 
 EXPOSE 5900 4001
-VOLUME /root/conf /var/log/ib /root/IBController/Logs /tmp/tws
+VOLUME /var/log/ib /root/IBController/Logs /tmp/tws
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/root/conf/supervisord.conf"]

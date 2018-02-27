@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p /root/Jts/$TWS_CONF_DIR
 LOG_FILE=/root/Jts/$TWS_CONF_DIR/tws.log
 
 while ! test -f $LOG_FILE; do

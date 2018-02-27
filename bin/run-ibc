@@ -1,7 +1,8 @@
 #!/bin/bash
 
 cd /opt/IBController
-cp -a /root/conf/IBController.ini /root/IBController/IBController.ini
+cp -a IBController.ini /root/IBController/IBController.ini
+update-ibcontroller-config.py /root/IBController/IBController.ini $IB_LOGIN $IB_PASSWORD --enable-logging --mode $IB_MODE
 
 if [ -n $TWS_CONF_DIR ]; then
   if [ $TWS_SYNC_CONF == "yes" ]; then
@@ -9,10 +10,6 @@ if [ -n $TWS_CONF_DIR ]; then
     if [ -d /root/Jts/$TWS_CONF_DIR ]; then
       echo "Copying /root/Jts/$TWS_CONF_DIR to /tmp/tws/"
       cp -a /root/Jts/$TWS_CONF_DIR /tmp/tws/
-    fi
-  else
-    if [ -f /root/conf/tws.xml ]; then
-      mkdir -p /root/Jts/$TWS_CONF_DIR && cp -a /root/conf/tws.xml /root/Jts/$TWS_CONF_DIR/tws.xml
     fi
   fi
 fi
