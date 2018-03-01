@@ -14,4 +14,4 @@ if [ -n $TWS_CONF_DIR ]; then
   fi
 fi
 
-exec ./IBControllerStart.sh
+exec ./IBControllerGatewayStart.sh -inline
