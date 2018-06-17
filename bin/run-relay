@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Forking 127.0.0.1::$TWS_PORT onto 0.0.0.0:$RELAY_PORT"
+exec socat TCP-LISTEN:$RELAY_PORT,fork TCP:127.0.0.1:$TWS_PORT

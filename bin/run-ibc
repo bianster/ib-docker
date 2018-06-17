@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd /opt/IBController
-cp -a IBController.ini /root/IBController/IBController.ini
-update-ibcontroller-config.py /root/IBController/IBController.ini $IB_LOGIN $IB_PASSWORD --enable-logging --mode $IB_MODE
+cd /opt/ibc
+cp -a config.ini /root/ibc/config.ini
+update-ibc-config.py /root/ibc/config.ini $IB_LOGIN $IB_PASSWORD --enable-logging --mode $IB_MODE --tws-version $TWS_VERSION --port $TWS_PORT --accept-connections $IB_ACCEPT_CONNECTIONS
 
 if [ -n $TWS_CONF_DIR ]; then
   if [ $TWS_SYNC_CONF == "yes" ]; then
@@ -14,4 +14,4 @@ if [ -n $TWS_CONF_DIR ]; then
   fi
 fi
 
-exec ./IBControllerGatewayStart.sh -inline
+exec ./gatewaystart.sh -inline
